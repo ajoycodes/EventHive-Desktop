@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminUsersController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header">
+         <children>
+            <Label text="Manage Users" styleClass="header-title">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="backButton" onAction="#handleBack" text="Back to Dashboard" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </HBox>
+      <TableView fx:id="usersTable" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="id" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="username" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="200.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="email" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="roleColumn" text="Roles" prefWidth="200.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="role" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="actionColumn" text="Action" prefWidth="120.0" />
+         </columns>
+      </TableView>
+      <Label fx:id="errorLabel" styleClass="error-label" text="" />
+   </children>
+</VBox>
+

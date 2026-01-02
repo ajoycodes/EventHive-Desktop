@@ -1,0 +1,204 @@
+/* EventHive Desktop Application Styles - Enhanced */
+
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #fafafa;
+}
+
+/* Card/Container Styles */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 20px;
+}
+
+.stat-card {
+    -fx-background-color: linear-gradient(to bottom right, #1976d2, #1565c0);
+    -fx-background-radius: 8px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3);
+}
+
+.stat-card .label {
+    -fx-text-fill: white;
+}
+
+.stat-number {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.stat-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255,255,255,0.9);
+}
+
+.title-label {
+    -fx-text-fill: #1976d2;
+    -fx-padding: 10px;
+}
+
+.subtitle-label {
+    -fx-text-fill: #666;
+    -fx-padding: 5px;
+}
+
+.form-container {
+    -fx-padding: 20px;
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 10px;
+}
+
+.header {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar {
+    -fx-background-color: #e3f2fd;
+    -fx-padding: 20px;
+}
+
+.content {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+}
+
+.welcome-text {
+    -fx-text-fill: #1976d2;
+    -fx-padding: 10px;
+}
+
+.error-label {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+}
+
+.info-label {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+}
+
+.button {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #1565c0;
+}
+
+.button:pressed {
+    -fx-background-color: #0d47a1;
+}
+
+.text-field, .password-field, .text-area {
+    -fx-padding: 8px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-border-color: #1976d2;
+}
+
+.table-view {
+    -fx-background-color: white;
+}
+
+.table-column {
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e3f2fd;
+}
+
+.combo-box {
+    -fx-padding: 8px;
+    -fx-background-radius: 5px;
+}
+
+/* Success messages */
+.success-label {
+    -fx-text-fill: #2e7d32;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+}
+
+/* Table enhancements */
+.table-view .table-cell {
+    -fx-padding: 10px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}
+
+/* Price column formatting */
+.price-column {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+/* Button variants */
+.button-primary {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+}
+
+.button-success {
+    -fx-background-color: #2e7d32;
+    -fx-text-fill: white;
+}
+
+.button-success:hover {
+    -fx-background-color: #1b5e20;
+}
+
+.button-danger {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+}
+
+.button-danger:hover {
+    -fx-background-color: #b71c1c;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* TextArea styling */
+.text-area {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #e0e0e0;
+}
+
+.text-area:focused {
+    -fx-border-color: #1976d2;
+}
+

@@ -1,0 +1,38 @@
+================================================================================
+                    EVENTHIVE DESKTOP - HOW TO RUN
+================================================================================
+
+EASIEST METHOD (RECOMMENDED):
+-----------------------------
+1. Open IntelliJ IDEA
+2. Open Maven tool window (View → Tool Windows → Maven)
+3. Expand: eventhive-desktop → Plugins → javafx
+4. Double-click "javafx:run"
+5. Application will start!
+
+That's it! No configuration needed.
+
+================================================================================
+
+ALTERNATIVE METHOD (If Maven doesn't work):
+--------------------------------------------
+1. Run → Edit Configurations...
+2. Create new "Application" configuration
+3. Main class: app.Main
+4. VM options: --add-modules javafx.controls,javafx.fxml
+5. Click Run
+
+================================================================================
+
+DEFAULT LOGIN CREDENTIALS:
+--------------------------
+Admin:     admin / admin123
+Organizer: organizer1 / org123
+User:      user1 / user123
+
+================================================================================
+
+For more details, see QUICK_START.md
+
+================================================================================
+
