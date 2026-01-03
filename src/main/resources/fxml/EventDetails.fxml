@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EventDetailsController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header">
+         <children>
+            <Label text="Event Details" styleClass="header-title">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="bookButton" onAction="#handleBookTicket" text="Book Ticket" />
+            <Button fx:id="backButton" onAction="#handleBack" text="Back" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </HBox>
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+         <VBox spacing="20.0" styleClass="content card">
+            <children>
+               <Label fx:id="eventNameLabel" styleClass="welcome-text">
+                  <font>
+                     <Font name="System Bold" size="32.0" />
+                  </font>
+               </Label>
+               <Separator />
+               <GridPane hgap="20.0" vgap="15.0">
+                  <columnConstraints>
+                     <ColumnConstraints minWidth="150.0" />
+                     <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+                  <children>
+                     <Label text="Date &amp; Time:" styleClass="info-label" GridPane.columnIndex="0" />
+                     <Label fx:id="dateTimeLabel" styleClass="info-label" GridPane.columnIndex="1" />
+                     
+                     <Label text="Location:" styleClass="info-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                     <Label fx:id="locationLabel" styleClass="info-label" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                     
+                     <Label text="Ticket Price:" styleClass="info-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                     <Label fx:id="priceLabel" styleClass="info-label" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                     
+                     <Label text="Available Seats:" styleClass="info-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                     <Label fx:id="seatsLabel" styleClass="info-label" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                     
+                     <Label text="Total Seats:" styleClass="info-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                     <Label fx:id="totalSeatsLabel" styleClass="info-label" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+                  </children>
+               </GridPane>
+               <Separator />
+               <VBox spacing="10.0">
+                  <children>
+                     <Label text="Description:" styleClass="info-label">
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
+                     </Label>
+                     <TextArea fx:id="descriptionArea" editable="false" wrapText="true" prefRowCount="5" />
+                  </children>
+               </VBox>
+            </children>
+            <padding>
+               <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </padding>
+         </VBox>
+      </ScrollPane>
+      <Label fx:id="errorLabel" styleClass="error-label" text="" />
+   </children>
+</VBox>
+
