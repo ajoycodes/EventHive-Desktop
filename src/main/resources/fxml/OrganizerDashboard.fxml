@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.OrganizerDashboardController">
+   <top>
+      <VBox>
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header">
+               <children>
+                  <Label text="EventHive - Organizer Dashboard" styleClass="header-title">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="welcomeLabel" text="Welcome, Organizer" />
+                  <Button fx:id="logoutButton" onAction="#handleLogout" text="Logout" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <VBox spacing="10.0" styleClass="sidebar">
+         <children>
+            <Button fx:id="createEventButton" onAction="#handleCreateEvent" text="Create Event" prefWidth="200.0" />
+            <Button fx:id="myEventsButton" onAction="#handleMyEvents" text="My Events" prefWidth="200.0" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true">
+         <VBox spacing="20.0" styleClass="content">
+            <children>
+               <Label text="Organizer Dashboard" styleClass="welcome-text">
+                  <font>
+                     <Font name="System Bold" size="28.0" />
+                  </font>
+               </Label>
+               <Label fx:id="statsLabel" text="Select an option from the sidebar to manage your events" />
+               <Separator />
+               <GridPane hgap="20.0" vgap="20.0" alignment="CENTER">
+                  <columnConstraints>
+                     <ColumnConstraints hgrow="ALWAYS" />
+                     <ColumnConstraints hgrow="ALWAYS" />
+                     <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+                  <children>
+                     <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" GridPane.columnIndex="0" prefWidth="180.0" prefHeight="150.0">
+                        <children>
+                           <Label fx:id="eventsCountLabel" styleClass="stat-number" text="0" />
+                           <Label text="Total Events" styleClass="stat-label" />
+                        </children>
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                     </VBox>
+                     <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" GridPane.columnIndex="1" prefWidth="180.0" prefHeight="150.0">
+                        <children>
+                           <Label fx:id="ticketsSoldLabel" styleClass="stat-number" text="0" />
+                           <Label text="Tickets Sold" styleClass="stat-label" />
+                        </children>
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                     </VBox>
+                     <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" GridPane.columnIndex="2" prefWidth="180.0" prefHeight="150.0">
+                        <children>
+                           <Label fx:id="revenueLabel" styleClass="stat-number" text="$0.00" />
+                           <Label text="Total Revenue" styleClass="stat-label" />
+                        </children>
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                     </VBox>
+                  </children>
+               </GridPane>
+            </children>
+            <padding>
+               <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </padding>
+         </VBox>
+      </ScrollPane>
+   </center>
+</BorderPane>
+

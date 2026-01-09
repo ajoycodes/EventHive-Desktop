@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MyTicketsController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header">
+         <children>
+            <Label text="My Tickets" styleClass="header-title">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="backButton" onAction="#handleBack" text="Back to Dashboard" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </HBox>
+      <TableView fx:id="ticketsTable" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="ticketCodeColumn" text="Ticket Code" prefWidth="200.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="ticketCode" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="eventNameColumn" text="Event Name" prefWidth="200.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="eventName" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="bookingDateColumn" text="Booking Date" prefWidth="180.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="bookingDate" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="100.0">
+               <cellValueFactory>
+                  <PropertyValueFactory property="price" />
+               </cellValueFactory>
+            </TableColumn>
+         </columns>
+      </TableView>
+      <Label fx:id="errorLabel" styleClass="error-label" text="" />
+   </children>
+</VBox>
+
