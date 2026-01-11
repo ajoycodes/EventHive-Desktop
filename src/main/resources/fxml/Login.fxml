@@ -5,34 +5,51 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
-   <children>
-      <Label text="EventHive" styleClass="title-label">
+<StackPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="app.controllers.LoginController" styleClass="login-container"
+           stylesheets="@../styles/modern.css">
+   <VBox styleClass="login-card" spacing="20" alignment="CENTER" maxWidth="400">
+      <!-- App Logo/Title -->
+      <Label text="EventHive" styleClass="label-title">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="System Bold" size="32"/>
          </font>
       </Label>
-      <Label text="Event Management System" styleClass="subtitle-label">
+      
+      <Label text="Welcome Back!" styleClass="label-subheader" textAlignment="CENTER">
          <font>
-            <Font size="16.0" />
+            <Font size="16"/>
          </font>
       </Label>
-      <VBox alignment="CENTER" spacing="15.0" styleClass="form-container">
-         <children>
-            <TextField fx:id="usernameField" promptText="Username or Email" prefWidth="300.0" />
-            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="300.0" />
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Button fx:id="loginButton" onAction="#handleLogin" text="Login" prefWidth="140.0" />
-                  <Button fx:id="signupButton" onAction="#handleSignup" text="Sign Up" prefWidth="140.0" />
-               </children>
-            </HBox>
-            <Label fx:id="errorLabel" styleClass="error-label" text="" textFill="#d32f2f" />
-         </children>
+      
+      <!-- Login Form -->
+      <VBox spacing="16" VBox.vgrow="ALWAYS">
+         <Label text="Username or Email" styleClass="label-caption"/>
+         <TextField fx:id="usernameField" promptText="Enter username or email"/>
+         
+         <Label text="Password" styleClass="label-caption"/>
+         <PasswordField fx:id="passwordField" promptText="Enter password"/>
+         
+         <Label fx:id="errorLabel" styleClass="label-error" text="" />
       </VBox>
-   </children>
-   <padding>
-      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
-   </padding>
-</VBox>
-
+      
+      <!-- Action Buttons -->
+      <VBox spacing="12" alignment="CENTER">
+         <Button fx:id="loginButton" onAction="#handleLogin" text="Login" styleClass="button-primary" prefWidth="300">
+            <font>
+               <Font size="15" />
+            </font>
+         </Button>
+         
+         <Button fx:id="signupButton" onAction="#handleSignup" text="Create Account" styleClass="button-secondary" prefWidth="300">
+            <font>
+               <Font size="15" />
+            </font>
+         </Button>
+      </VBox>
+      
+      <padding>
+         <Insets top="32" bottom="32" left="40" right="40"/>
+      </padding>
+   </VBox>
+</StackPane>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EventListController">
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EventListController" stylesheets="@../styles/modern.css">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header">
          <children>
@@ -53,7 +53,7 @@
                   <PropertyValueFactory property="availableSeats" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="actionColumn" text="Action" prefWidth="120.0" />
+            <TableColumn fx:id="actionColumn" text="Action" prefWidth="200.0" />
          </columns>
       </TableView>
       <Label fx:id="errorLabel" styleClass="error-label" text="" />

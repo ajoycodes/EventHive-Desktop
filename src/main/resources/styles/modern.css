@@ -1,0 +1,441 @@
+/*
+ * EventHive - Modern macOS-Style Design System
+ * Design inspired by Apple's Human Interface Guidelines
+ */
+
+/* ============================================
+   ROOT VARIABLES - Design Tokens
+   ============================================ */
+.root {
+    /* Primary Colors - Apple Blue */
+    -fx-primary: #007AFF;
+    -fx-primary-hover: #0051D5;
+    -fx-primary-pressed: #003D99;
+    -fx-primary-light: #5AC8FA;
+
+    /* Backgrounds */
+    -fx-bg-white: #FFFFFF;
+    -fx-bg-light: #F5F5F7;
+    -fx-bg-gray: #E5E5EA;
+
+    /* Text Colors */
+    -fx-text-primary: #1D1D1F;
+    -fx-text-secondary: #6E6E73;
+    -fx-text-tertiary: #999999;
+    -fx-text-white: #FFFFFF;
+
+    /* Status Colors */
+    -fx-success: #34C759;
+    -fx-warning: #FF9500;
+    -fx-error: #FF3B30;
+
+    /* Borders */
+    -fx-border-light: #E5E5EA;
+    -fx-border-medium: #D1D1D6;
+
+    /* Shadows */
+    -fx-shadow-light: rgba(0, 0, 0, 0.08);
+    -fx-shadow-medium: rgba(0, 0, 0, 0.1);
+    -fx-shadow-heavy: rgba(0, 0, 0, 0.12);
+
+    /* Font Family */
+    -fx-font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    -fx-font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+.root {
+    -fx-background-color: -fx-bg-light;
+    -fx-font-family: -fx-font-family;
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+/* Primary Button - Apple Blue */
+.button-primary {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-text-white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10px 24px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 4, 0, 0, 2);
+    -fx-transition: all 0.2s ease;
+}
+
+.button-primary:hover {
+    -fx-background-color: -fx-primary-hover;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-medium, 6, 0, 0, 3);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button-primary:pressed {
+    -fx-background-color: -fx-primary-pressed;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 2, 0, 0, 1);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Secondary Button - Outlined */
+.button-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primary;
+    -fx-border-color: -fx-primary;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10px 24px;
+    -fx-cursor: hand;
+}
+
+.button-secondary:hover {
+    -fx-background-color: rgba(0, 122, 255, 0.08);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button-secondary:pressed {
+    -fx-background-color: rgba(0, 122, 255, 0.15);
+}
+
+/* Danger Button */
+.button-danger {
+    -fx-background-color: -fx-error;
+    -fx-text-fill: -fx-text-white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10px 24px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.button-danger:hover {
+    -fx-background-color: #E52D25;
+}
+
+/* Default Button (neutral) */
+.button {
+    -fx-background-color: -fx-bg-white;
+    -fx-text-fill: -fx-text-primary;
+    -fx-border-color: -fx-border-light;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: -fx-bg-light;
+    -fx-border-color: -fx-border-medium;
+}
+
+/* ============================================
+   TEXT INPUTS
+   ============================================ */
+.text-field,
+.text-area,
+.password-field {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 8px;
+    -fx-border-color: -fx-border-light;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-prompt-text-fill: -fx-text-tertiary;
+}
+
+.text-field:focused,
+.text-area:focused,
+.password-field:focused {
+    -fx-border-color: -fx-primary;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.15), 8, 0, 0, 0);
+}
+
+/* ============================================
+   LABELS
+   ============================================ */
+.label {
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 14px;
+}
+
+.label-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-family: -fx-font-family-display;
+}
+
+.label-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.label-subheader {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.label-caption {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.label-error {
+    -fx-text-fill: -fx-error;
+    -fx-font-size: 13px;
+}
+
+/* ============================================
+   CARDS & CONTAINERS
+   ============================================ */
+.card {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 8, 0, 0, 2);
+    -fx-padding: 24px;
+}
+
+.card:hover {
+    -fx-effect: dropshadow(gaussian, -fx-shadow-medium, 12, 0, 0, 4);
+}
+
+.stat-card {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 8, 0, 0, 2);
+    -fx-padding: 24px;
+    -fx-alignment: center;
+}
+
+.stat-number {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary;
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-weight: 500;
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+.header {
+    -fx-background-color: -fx-bg-white;
+    -fx-padding: 16px 24px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 4, 0, 0, 1);
+}
+
+.header-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-family: -fx-font-family-display;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: -fx-bg-white;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 4, 0, 2, 0);
+}
+
+.sidebar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-primary;
+    -fx-alignment: center-left;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 8px;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.sidebar .button:hover {
+    -fx-background-color: rgba(0, 122, 255, 0.08);
+    -fx-text-fill: -fx-primary;
+}
+
+.sidebar .button:pressed {
+    -fx-background-color: rgba(0, 122, 255, 0.12);
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+.table-view {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-light, 8, 0, 0, 2);
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-bg-light;
+    -fx-background-radius: 12px 12px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1.5 0;
+    -fx-border-color: -fx-border-light;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-padding: 12px 16px;
+}
+
+.table-view .table-cell {
+    -fx-padding: 12px 16px;
+    -fx-border-width: 0;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 14px;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-bg-white;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -fx-bg-light;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(0, 122, 255, 0.04);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(0, 122, 255, 0.1);
+}
+
+/* ============================================
+   SCROLL PANE
+   ============================================ */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: -fx-border-medium;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: -fx-text-tertiary;
+}
+
+/* ============================================
+   CONTENT AREA
+   ============================================ */
+.content {
+    -fx-padding: 32px;
+    -fx-spacing: 24px;
+}
+
+.welcome-text {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-family: -fx-font-family-display;
+}
+
+/* ============================================
+   SEPARATOR
+   ============================================ */
+.separator .line {
+    -fx-border-color: -fx-border-light;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* ============================================
+   LOGIN SCREEN SPECIFIC
+   ============================================ */
+.login-container {
+    -fx-background-color: linear-gradient(to bottom, #F5F5F7 0%, #E5E5EA 100%);
+    -fx-alignment: center;
+    -fx-padding: 48px;
+}
+
+.login-card {
+    -fx-background-color: -fx-bg-white;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-heavy, 16, 0, 0, 4);
+    -fx-padding: 48px;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+    -fx-max-width: 400px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.text-center {
+    -fx-alignment: center;
+}
+
+.text-left {
+    -fx-alignment: center-left;
+}
+
+.text-right {
+    -fx-alignment: center-right;
+}
+
+.mt-sm {
+    -fx-padding: 8px 0 0 0;
+}
+
+.mt-md {
+    -fx-padding: 12px 0 0 0;
+}
+
+.mt-lg {
+    -fx-padding: 16px 0 0 0;
+}
+
+.mt-xl {
+    -fx-padding: 24px 0 0 0;
+}
+
+.mb-sm {
+    -fx-padding: 0 0 8px 0;
+}
+
+.mb-md {
+    -fx-padding: 0 0 12px 0;
+}
+
+.mb-lg {
+    -fx-padding: 0 0 16px 0;
+}
+
+.mb-xl {
+    -fx-padding: 0 0 24px 0;
+}

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.UserDashboardController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.UserDashboardController" stylesheets="@../styles/modern.css">
    <top>
       <VBox>
          <children>
@@ -49,7 +49,7 @@
                </Label>
                <Label fx:id="statsLabel" text="Select an option from the sidebar to get started" />
                <Separator />
-               <HBox spacing="20.0" alignment="CENTER">
+               <HBox spacing="20.0" alignment="CENTER_LEFT">
                   <children>
                      <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" prefWidth="200.0" prefHeight="150.0">
                         <children>
