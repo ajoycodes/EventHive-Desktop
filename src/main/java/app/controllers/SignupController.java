@@ -3,6 +3,9 @@ package app.controllers;
 import app.dao.UserDAO;
 import app.models.User;
 import app.utils.SceneManager;
+import app.utils.PasswordHasher;
+import app.utils.ValidationUtils;
+import app.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -46,8 +49,12 @@ public class SignupController {
         String password = passwordField.getText();
         String role = roleComboBox.getValue();
 
+        // Clear previous errors
+        errorLabel.setText("");
+
         // Validation
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (ValidationUtils.isEmpty(username) || ValidationUtils.isEmpty(email) ||
+                ValidationUtils.isEmpty(password)) {
             errorLabel.setText("Please fill in all fields");
             return;
         }
@@ -57,13 +64,22 @@ public class SignupController {
             return;
         }
 
-        if (password.length() < 6) {
-            errorLabel.setText("Password must be at least 6 characters");
+        // Validate username format
+        if (!ValidationUtils.isValidUsername(username)) {
+            errorLabel.setText("Username must be 3-20 characters, alphanumeric and underscore only");
             return;
         }
 
-        if (!isValidEmail(email)) {
-            errorLabel.setText("Invalid email format");
+        // Validate email format
+        if (!ValidationUtils.isValidEmail(email)) {
+            errorLabel.setText("Please enter a valid email address");
+            return;
+        }
+
+        // Check password strength
+        PasswordHasher.PasswordStrength strength = PasswordHasher.checkPasswordStrength(password);
+        if (!strength.isValid()) {
+            errorLabel.setText(strength.getMessage());
             return;
         }
 
@@ -81,6 +97,7 @@ public class SignupController {
             existingUser.addRole(role);
             // Update user with new roles
             if (userDAO.updateUserRoles(existingUser.getId(), existingUser.getRole())) {
+                showSuccess("Role added successfully! You can now login.");
                 SceneManager.switchScene("/fxml/Login.fxml");
                 return;
             } else {
@@ -89,11 +106,15 @@ public class SignupController {
             }
         }
 
-        // Create new user
-        User newUser = new User(username, email, password, role);
+        // Hash the password before storing
+        String hashedPassword = PasswordHasher.hashPassword(password);
+
+        // Create new user with hashed password
+        User newUser = new User(username, email, hashedPassword, role);
         boolean success = userDAO.createUser(newUser);
 
         if (success) {
+            showSuccess("Account created successfully! Please login.");
             // Navigate back to login
             SceneManager.switchScene("/fxml/Login.fxml");
         } else {
@@ -102,17 +123,21 @@ public class SignupController {
     }
 
     /**
+     * Show success dialog
+     */
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
      * Handle back button click - navigate to login screen
      */
     @FXML
     private void handleLogin() {
         SceneManager.switchScene("/fxml/Login.fxml");
-    }
-
-    /**
-     * Basic email validation
-     */
-    private boolean isValidEmail(String email) {
-        return email.contains("@") && email.contains(".") && email.length() > 5;
     }
 }

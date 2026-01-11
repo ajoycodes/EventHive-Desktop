@@ -3,8 +3,13 @@ package app.controllers;
 import app.utils.DashboardStats;
 import app.utils.SceneManager;
 import app.utils.UserSession;
+import app.utils.AuthorizationManager;
+import app.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.util.Optional;
 
 /**
  * Controller for the Admin Dashboard
@@ -39,9 +44,20 @@ public class AdminDashboardController {
 
     @FXML
     public void initialize() {
-        if (UserSession.getInstance().isLoggedIn()) {
-            welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
-            loadStatistics();
+        try {
+            // Authorization check - only admin can access
+            AuthorizationManager.requireRole(Constants.ROLE_ADMIN);
+
+            if (UserSession.getInstance().isLoggedIn()) {
+                welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
+                loadStatistics();
+            }
+        } catch (AuthorizationManager.UnauthorizedException e) {
+            AuthorizationManager.showUnauthorizedAlert(e.getMessage());
+            SceneManager.switchScene("/fxml/Login.fxml");
+        } catch (Exception e) {
+            System.err.println("Error initializing AdminDashboardController:");
+            e.printStackTrace();
         }
     }
 
@@ -88,7 +104,17 @@ public class AdminDashboardController {
      */
     @FXML
     private void handleLogout() {
-        UserSession.getInstance().clearSession();
-        SceneManager.switchScene("/fxml/Login.fxml");
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Logout");
+        confirmation.setHeaderText("Are you sure you want to logout?");
+        confirmation.setContentText("You will need to login again to access the admin panel.");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Clear session
+            UserSession.clearSession();
+            // Navigate to login
+            SceneManager.switchScene("/fxml/Login.fxml");
+        }
     }
 }

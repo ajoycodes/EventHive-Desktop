@@ -30,6 +30,16 @@
          <Label text="Password" styleClass="label-caption"/>
          <PasswordField fx:id="passwordField" promptText="Enter password"/>
          
+         <!-- Forgot Password Link -->
+         <HBox alignment="CENTER_RIGHT">
+            <Hyperlink fx:id="forgotPasswordLink" onAction="#handleForgotPassword" 
+                       text="Forgot Password?" styleClass="link-text">
+               <font>
+                  <Font size="12"/>
+               </font>
+            </Hyperlink>
+         </HBox>
+         
          <Label fx:id="errorLabel" styleClass="label-error" text="" />
       </VBox>
       

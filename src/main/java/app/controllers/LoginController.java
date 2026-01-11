@@ -4,6 +4,7 @@ import app.dao.UserDAO;
 import app.models.User;
 import app.utils.SceneManager;
 import app.utils.UserSession;
+import app.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -43,10 +44,37 @@ public class LoginController {
 
         System.out.println("[LoginController] Login attempt for: " + usernameOrEmail);
 
+        // Clear previous error
+        errorLabel.setText("");
+
         // Validation
         if (usernameOrEmail.isEmpty() || password.isEmpty()) {
             System.out.println("[LoginController] Validation failed: Empty fields");
             errorLabel.setText("Please fill in all fields");
+            return;
+        }
+
+        // Check if account exists first (for lockout checking)
+        User existingUser = userDAO.findByUsername(usernameOrEmail);
+        if (existingUser == null) {
+            existingUser = userDAO.findByEmail(usernameOrEmail);
+        }
+
+        // Check if account is locked
+        if (existingUser != null && userDAO.isAccountLocked(existingUser.getId())) {
+            errorLabel.setText("Account is temporarily locked. Please try again later.");
+            showAlert("Account Locked",
+                    "Your account has been locked due to multiple failed login attempts.\n" +
+                            "Please try again in " + Constants.ACCOUNT_LOCK_MINUTES + " minutes.");
+            return;
+        }
+
+        // Check recent failed login attempts (even if user doesn't exist)
+        int recentFailures = userDAO.getRecentFailedLoginCount(usernameOrEmail);
+        if (recentFailures >= Constants.MAX_LOGIN_ATTEMPTS) {
+            errorLabel.setText("Too many failed attempts. Please try again later.");
+            showAlert("Too Many Attempts",
+                    "Too many failed login attempts. Please try again in a few minutes.");
             return;
         }
 
@@ -57,6 +85,11 @@ public class LoginController {
             if (user != null) {
                 System.out.println("[LoginController] Authentication successful for user: " + user.getUsername()
                         + ", Roles: " + user.getRole());
+
+                // Record successful login
+                userDAO.recordLoginAttempt(usernameOrEmail, true);
+                userDAO.updateLastLogin(user.getId());
+
                 // Set current user session
                 UserSession.getInstance().setCurrentUser(user);
 
@@ -80,13 +113,31 @@ public class LoginController {
                 }
             } else {
                 System.out.println("[LoginController] Authentication failed: Invalid credentials");
-                errorLabel.setText("Invalid username/email or password");
-                showAlert("Login Failed", "Invalid username or password.");
+
+                // Record failed login
+                userDAO.recordLoginAttempt(usernameOrEmail, false);
+
+                if (existingUser != null) {
+                    // Increment failed attempts
+                    userDAO.incrementFailedAttempts(existingUser.getId());
+
+                    // Check if we should lock the account
+                    int totalFailures = userDAO.getRecentFailedLoginCount(usernameOrEmail);
+                    if (totalFailures >= Constants.MAX_LOGIN_ATTEMPTS - 1) {
+                        userDAO.lockAccount(existingUser.getId(), Constants.ACCOUNT_LOCK_MINUTES);
+                        errorLabel.setText("Account locked due to multiple failed attempts.");
+                    } else {
+                        int attemptsLeft = Constants.MAX_LOGIN_ATTEMPTS - totalFailures - 1;
+                        errorLabel.setText("Invalid credentials. " + attemptsLeft + " attempts remaining.");
+                    }
+                } else {
+                    errorLabel.setText("Invalid username/email or password");
+                }
             }
         } catch (Exception e) {
             System.err.println("Login Error: " + e.getMessage());
             e.printStackTrace();
-            showAlert("Login Error", "An error occurred: " + e.getMessage());
+            errorLabel.setText("An error occurred. Please try again.");
         }
     }
 
@@ -151,5 +202,13 @@ public class LoginController {
     @FXML
     private void handleSignup() {
         SceneManager.switchScene("/fxml/Signup.fxml");
+    }
+
+    /**
+     * Handle forgot password link click - navigate to forgot password screen
+     */
+    @FXML
+    private void handleForgotPassword() {
+        SceneManager.switchScene("/fxml/ForgotPassword.fxml");
     }
 }

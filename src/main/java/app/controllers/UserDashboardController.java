@@ -3,8 +3,12 @@ package app.controllers;
 import app.utils.DashboardStats;
 import app.utils.SceneManager;
 import app.utils.UserSession;
+import app.utils.AuthorizationManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.util.Optional;
 
 /**
  * Controller for the User Dashboard
@@ -34,14 +38,20 @@ public class UserDashboardController {
     @FXML
     public void initialize() {
         try {
+            // Authorization check
+            AuthorizationManager.requireLogin();
+
             if (UserSession.getInstance().isLoggedIn()) {
                 if (welcomeLabel != null) {
                     welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
                 }
                 loadStatistics();
             }
+        } catch (AuthorizationManager.UnauthorizedException e) {
+            AuthorizationManager.showUnauthorizedAlert(e.getMessage());
+            SceneManager.switchScene("/fxml/Login.fxml");
         } catch (Exception e) {
-            System.err.println("Error verifying UserDashboardController:");
+            System.err.println("Error initializing UserDashboardController:");
             e.printStackTrace();
         }
     }
@@ -86,7 +96,17 @@ public class UserDashboardController {
      */
     @FXML
     private void handleLogout() {
-        UserSession.getInstance().clearSession();
-        SceneManager.switchScene("/fxml/Login.fxml");
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Logout");
+        confirmation.setHeaderText("Are you sure you want to logout?");
+        confirmation.setContentText("You will need to login again to access your account.");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Clear session
+            UserSession.clearSession();
+            // Navigate to login
+            SceneManager.switchScene("/fxml/Login.fxml");
+        }
     }
 }

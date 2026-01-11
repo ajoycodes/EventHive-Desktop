@@ -56,6 +56,10 @@ public class DatabaseConnection {
                             email TEXT UNIQUE NOT NULL,
                             password TEXT NOT NULL,
                             role TEXT NOT NULL DEFAULT 'user',
+                            account_status TEXT DEFAULT 'ACTIVE',
+                            failed_login_attempts INTEGER DEFAULT 0,
+                            last_login TIMESTAMP,
+                            locked_until TIMESTAMP,
                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                         )
                     """);
@@ -94,6 +98,43 @@ public class DatabaseConnection {
                         )
                     """);
 
+            // Create password reset tokens table
+            stmt.execute("""
+                        CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            user_id INTEGER NOT NULL,
+                            token TEXT UNIQUE NOT NULL,
+                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                            expires_at TIMESTAMP NOT NULL,
+                            used BOOLEAN DEFAULT 0,
+                            FOREIGN KEY (user_id) REFERENCES users(id)
+                        )
+                    """);
+
+            // Create user sessions table
+            stmt.execute("""
+                        CREATE TABLE IF NOT EXISTS user_sessions (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            user_id INTEGER NOT NULL,
+                            session_token TEXT UNIQUE NOT NULL,
+                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                            last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                            expires_at TIMESTAMP NOT NULL,
+                            FOREIGN KEY (user_id) REFERENCES users(id)
+                        )
+                    """);
+
+            // Create login attempts table
+            stmt.execute("""
+                        CREATE TABLE IF NOT EXISTS login_attempts (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            username TEXT NOT NULL,
+                            success BOOLEAN NOT NULL,
+                            attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                            ip_address TEXT
+                        )
+                    """);
+
             // Insert default users if not exists
             insertDefaultUsers(conn);
 
@@ -107,12 +148,13 @@ public class DatabaseConnection {
 
     /**
      * Insert default users for testing
+     * Passwords are now hashed using BCrypt for security
      */
     private static void insertDefaultUsers(Connection conn) throws SQLException {
         String checkUserSql = "SELECT COUNT(*) FROM users WHERE username = ?";
         String insertUserSql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
 
-        // Default admin
+        // Default admin (password: admin123)
         try (PreparedStatement checkStmt = conn.prepareStatement(checkUserSql)) {
             checkStmt.setString(1, "admin");
             ResultSet rs = checkStmt.executeQuery();
@@ -120,15 +162,15 @@ public class DatabaseConnection {
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertUserSql)) {
                     insertStmt.setString(1, "admin");
                     insertStmt.setString(2, "admin@eventhive.com");
-                    insertStmt.setString(3, "admin123");
+                    insertStmt.setString(3, PasswordHasher.hashPassword("admin123"));
                     insertStmt.setString(4, "admin");
                     insertStmt.executeUpdate();
-                    System.out.println("Default admin user created");
+                    System.out.println("Default admin user created (password: admin123)");
                 }
             }
         }
 
-        // Default organizer
+        // Default organizer (password: org123)
         try (PreparedStatement checkStmt = conn.prepareStatement(checkUserSql)) {
             checkStmt.setString(1, "organizer1");
             ResultSet rs = checkStmt.executeQuery();
@@ -136,15 +178,15 @@ public class DatabaseConnection {
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertUserSql)) {
                     insertStmt.setString(1, "organizer1");
                     insertStmt.setString(2, "organizer1@eventhive.com");
-                    insertStmt.setString(3, "org123");
+                    insertStmt.setString(3, PasswordHasher.hashPassword("org123"));
                     insertStmt.setString(4, "organizer");
                     insertStmt.executeUpdate();
-                    System.out.println("Default organizer user created");
+                    System.out.println("Default organizer user created (password: org123)");
                 }
             }
         }
 
-        // Default user
+        // Default user (password: user123)
         try (PreparedStatement checkStmt = conn.prepareStatement(checkUserSql)) {
             checkStmt.setString(1, "user1");
             ResultSet rs = checkStmt.executeQuery();
@@ -152,10 +194,10 @@ public class DatabaseConnection {
                 try (PreparedStatement insertStmt = conn.prepareStatement(insertUserSql)) {
                     insertStmt.setString(1, "user1");
                     insertStmt.setString(2, "user1@eventhive.com");
-                    insertStmt.setString(3, "user123");
+                    insertStmt.setString(3, PasswordHasher.hashPassword("user123"));
                     insertStmt.setString(4, "user");
                     insertStmt.executeUpdate();
-                    System.out.println("Default user created");
+                    System.out.println("Default user created (password: user123)");
                 }
             }
         }
