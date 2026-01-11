@@ -41,8 +41,11 @@ public class LoginController {
         String usernameOrEmail = usernameField.getText().trim();
         String password = passwordField.getText();
 
+        System.out.println("[LoginController] Login attempt for: " + usernameOrEmail);
+
         // Validation
         if (usernameOrEmail.isEmpty() || password.isEmpty()) {
+            System.out.println("[LoginController] Validation failed: Empty fields");
             errorLabel.setText("Please fill in all fields");
             return;
         }
@@ -51,22 +54,31 @@ public class LoginController {
         User user = userDAO.authenticate(usernameOrEmail, password);
 
         if (user != null) {
+            System.out.println("[LoginController] Authentication successful for user: " + user.getUsername()
+                    + ", Roles: " + user.getRole());
             // Set current user session
             UserSession.getInstance().setCurrentUser(user);
 
             // Check if user has multiple roles
             String[] roles = user.getRoles();
             if (roles.length > 1) {
+                System.out.println("[LoginController] User has multiple roles, showing dialog...");
                 // User has multiple roles, show selection dialog
                 String selectedRole = showRoleSelectionDialog(roles);
                 if (selectedRole != null) {
+                    System.out.println("[LoginController] Role selected: " + selectedRole);
                     navigateToDashboard(selectedRole);
+                } else {
+                    System.out.println("[LoginController] Role selection cancelled");
                 }
             } else {
                 // Single role, navigate directly
-                navigateToDashboard(roles.length > 0 ? roles[0] : "USER");
+                String role = roles.length > 0 ? roles[0] : "USER";
+                System.out.println("[LoginController] Single role found: " + role);
+                navigateToDashboard(role);
             }
         } else {
+            System.out.println("[LoginController] Authentication failed: Invalid credentials");
             errorLabel.setText("Invalid username/email or password");
         }
     }
@@ -78,7 +90,7 @@ public class LoginController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Select Role");
         alert.setHeaderText("You have multiple roles. Please select which role to login as:");
-        
+
         StringBuilder content = new StringBuilder();
         for (int i = 0; i < roles.length; i++) {
             content.append((i + 1)).append(". ").append(roles[i].trim()).append("\n");
@@ -125,4 +137,3 @@ public class LoginController {
         SceneManager.switchScene("/fxml/Signup.fxml");
     }
 }
-

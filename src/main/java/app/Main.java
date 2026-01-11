@@ -11,7 +11,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
+        System.out.println("[Main] JavaFX start method called");
+
         // Initialize database
+        System.out.println("[Main] Initializing database...");
         DatabaseConnection.initializeDatabase();
 
         // Set primary stage for scene management
@@ -24,6 +27,7 @@ public class Main extends Application {
         primaryStage.setResizable(true);
 
         // Load and show login screen
+        System.out.println("[Main] Switching to Login scene...");
         SceneManager.switchScene("/fxml/Login.fxml");
 
         // Handle window close
@@ -33,7 +37,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        System.out.println("[Main] Launching application...");
         launch(args);
     }
 }
-

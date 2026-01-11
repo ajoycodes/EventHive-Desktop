@@ -5,24 +5,20 @@
 EASIEST METHOD (RECOMMENDED):
 -----------------------------
 1. Open IntelliJ IDEA
-2. Open Maven tool window (View → Tool Windows → Maven)
-3. Expand: eventhive-desktop → Plugins → javafx
+2. Look at the RIGHT sidebar -> Click "Maven"
+3. Expand: eventhive-desktop -> Plugins -> javafx
 4. Double-click "javafx:run"
-5. Application will start!
 
-That's it! No configuration needed.
+WHY THIS IS NECESSARY:
+You are running Java 25. The standard "Run" button does not configure JavaFX correctly.
+You MUST use the Maven panel or the application will crash with "Runtime components missing".
 
-================================================================================
+ALTERNATIVE METHOD (If you must use the 'Run' button):
+----------------------------------------------------
+You must edit your Run Configuration and add these VM Options:
+--module-path "/Users/ajoysaha/.m2/repository/org/openjfx/javafx-controls/21:/Users/ajoysaha/.m2/repository/org/openjfx/javafx-fxml/21:/Users/ajoysaha/.m2/repository/org/openjfx/javafx-graphics/21:/Users/ajoysaha/.m2/repository/org/openjfx/javafx-base/21" --add-modules javafx.controls,javafx.fxml
 
-ALTERNATIVE METHOD (If Maven doesn't work):
---------------------------------------------
-1. Run → Edit Configurations...
-2. Create new "Application" configuration
-3. Main class: app.Main
-4. VM options: --add-modules javafx.controls,javafx.fxml
-5. Click Run
-
-================================================================================
+(This path depends on your local computer, which is why the Maven method is better)
 
 DEFAULT LOGIN CREDENTIALS:
 --------------------------
