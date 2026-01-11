@@ -42,6 +42,12 @@ public class CreateEventController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button createButton;
+
+    @FXML
+    private javafx.scene.control.Button cancelButton;
+
     private EventDAO eventDAO;
 
     @Override
@@ -57,10 +63,10 @@ public class CreateEventController implements Initializable {
     private void handleCreate() {
         // Validation
         if (nameField.getText().trim().isEmpty() ||
-            dateField.getText().trim().isEmpty() ||
-            locationField.getText().trim().isEmpty() ||
-            priceField.getText().trim().isEmpty() ||
-            seatsField.getText().trim().isEmpty()) {
+                dateField.getText().trim().isEmpty() ||
+                locationField.getText().trim().isEmpty() ||
+                priceField.getText().trim().isEmpty() ||
+                seatsField.getText().trim().isEmpty()) {
             errorLabel.setText("Please fill in all required fields");
             return;
         }
@@ -68,8 +74,8 @@ public class CreateEventController implements Initializable {
         // Parse date
         LocalDateTime dateTime;
         try {
-            dateTime = LocalDateTime.parse(dateField.getText().trim(), 
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            dateTime = LocalDateTime.parse(dateField.getText().trim(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         } catch (DateTimeParseException e) {
             errorLabel.setText("Invalid date format. Use: yyyy-MM-dd HH:mm");
             return;
@@ -102,22 +108,21 @@ public class CreateEventController implements Initializable {
         }
 
         // Check if user is logged in and is an organizer
-        if (!UserSession.getInstance().isLoggedIn() || 
-            !UserSession.getInstance().getCurrentUser().isOrganizer()) {
+        if (!UserSession.getInstance().isLoggedIn() ||
+                !UserSession.getInstance().getCurrentUser().isOrganizer()) {
             errorLabel.setText("Only organizers can create events");
             return;
         }
 
         // Create event
         Event event = new Event(
-            nameField.getText().trim(),
-            dateTime,
-            locationField.getText().trim(),
-            descriptionField.getText().trim(),
-            price,
-            seats,
-            UserSession.getInstance().getCurrentUser().getId()
-        );
+                nameField.getText().trim(),
+                dateTime,
+                locationField.getText().trim(),
+                descriptionField.getText().trim(),
+                price,
+                seats,
+                UserSession.getInstance().getCurrentUser().getId());
 
         boolean success = eventDAO.createEvent(event);
 
@@ -143,4 +148,3 @@ public class CreateEventController implements Initializable {
         SceneManager.switchScene("/fxml/OrganizerDashboard.fxml");
     }
 }
-

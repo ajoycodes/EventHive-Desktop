@@ -39,6 +39,12 @@ public class BookTicketController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button confirmButton;
+
+    @FXML
+    private javafx.scene.control.Button cancelButton;
+
     private static Event selectedEvent;
     private EventDAO eventDAO;
     private TicketDAO ticketDAO;
@@ -109,12 +115,11 @@ public class BookTicketController implements Initializable {
         // Create ticket
         String ticketCode = TicketCodeGenerator.generateTicketCode();
         Ticket ticket = new Ticket(
-            ticketCode,
-            currentEvent.getId(),
-            userId,
-            LocalDateTime.now(),
-            currentEvent.getTicketPrice()
-        );
+                ticketCode,
+                currentEvent.getId(),
+                userId,
+                LocalDateTime.now(),
+                currentEvent.getTicketPrice());
 
         // Save ticket and update available seats (transaction-like behavior)
         boolean ticketCreated = ticketDAO.createTicket(ticket);
@@ -146,4 +151,3 @@ public class BookTicketController implements Initializable {
         SceneManager.switchScene("/fxml/EventList.fxml");
     }
 }
-

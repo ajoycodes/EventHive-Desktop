@@ -45,6 +45,15 @@ public class OrganizerEventsController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button createEventButton;
+
+    @FXML
+    private javafx.scene.control.Button backButton;
+
+    @FXML
+    private TableColumn<Event, String> statusColumn;
+
     private EventDAO eventDAO;
     private ObservableList<Event> events;
 
@@ -65,8 +74,7 @@ public class OrganizerEventsController implements Initializable {
             Event event = cellData.getValue();
             if (event.getDateTime() != null) {
                 return new javafx.beans.property.SimpleStringProperty(
-                    event.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-                );
+                        event.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             }
             return new javafx.beans.property.SimpleStringProperty("");
         });
@@ -156,12 +164,12 @@ public class OrganizerEventsController implements Initializable {
      */
     private void handleChangeStatus(Event event) {
         String currentStatus = event.getStatus();
-        
+
         // Show status selection dialog
         Alert statusAlert = new Alert(Alert.AlertType.CONFIRMATION);
         statusAlert.setTitle("Change Event Status");
         statusAlert.setHeaderText("Select New Status for: " + event.getName());
-        
+
         // Create buttons for each status
         statusAlert.getButtonTypes().clear();
         if (!"ACTIVE".equals(currentStatus)) {
@@ -226,4 +234,3 @@ public class OrganizerEventsController implements Initializable {
         SceneManager.switchScene("/fxml/OrganizerDashboard.fxml");
     }
 }
-

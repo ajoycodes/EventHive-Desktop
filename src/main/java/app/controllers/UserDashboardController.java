@@ -23,10 +23,26 @@ public class UserDashboardController {
     private Label totalSpentLabel;
 
     @FXML
+    private javafx.scene.control.Button logoutButton;
+
+    @FXML
+    private javafx.scene.control.Button viewEventsButton;
+
+    @FXML
+    private javafx.scene.control.Button myTicketsButton;
+
+    @FXML
     public void initialize() {
-        if (UserSession.getInstance().isLoggedIn()) {
-            welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
-            loadStatistics();
+        try {
+            if (UserSession.getInstance().isLoggedIn()) {
+                if (welcomeLabel != null) {
+                    welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
+                }
+                loadStatistics();
+            }
+        } catch (Exception e) {
+            System.err.println("Error verifying UserDashboardController:");
+            e.printStackTrace();
         }
     }
 
@@ -37,10 +53,10 @@ public class UserDashboardController {
         if (UserSession.getInstance().isLoggedIn()) {
             int userId = UserSession.getInstance().getCurrentUser().getId();
             DashboardStats.UserStats stats = DashboardStats.getUserStats(userId);
-            
+
             ticketsCountLabel.setText(String.valueOf(stats.totalTickets));
             totalSpentLabel.setText("$" + String.format("%.2f", stats.totalSpent));
-            
+
             if (stats.totalTickets == 0) {
                 statsLabel.setText("You haven't booked any tickets yet. Browse events to get started!");
             } else {
@@ -74,4 +90,3 @@ public class UserDashboardController {
         SceneManager.switchScene("/fxml/Login.fxml");
     }
 }
-

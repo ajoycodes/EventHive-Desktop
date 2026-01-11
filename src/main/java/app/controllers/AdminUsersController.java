@@ -39,6 +39,9 @@ public class AdminUsersController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button backButton;
+
     private UserDAO userDAO;
     private ObservableList<User> users;
 
@@ -72,8 +75,8 @@ public class AdminUsersController implements Initializable {
                 } else {
                     User user = getTableView().getItems().get(getIndex());
                     // Don't allow deleting yourself
-                    if (UserSession.getInstance().isLoggedIn() && 
-                        user.getId() == UserSession.getInstance().getCurrentUser().getId()) {
+                    if (UserSession.getInstance().isLoggedIn() &&
+                            user.getId() == UserSession.getInstance().getCurrentUser().getId()) {
                         deleteButton.setDisable(true);
                     } else {
                         deleteButton.setDisable(false);
@@ -124,4 +127,3 @@ public class AdminUsersController implements Initializable {
         SceneManager.switchScene("/fxml/AdminDashboard.fxml");
     }
 }
-

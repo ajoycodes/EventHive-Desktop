@@ -42,6 +42,12 @@ public class EditEventController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button updateButton;
+
+    @FXML
+    private javafx.scene.control.Button cancelButton;
+
     private static Event selectedEvent;
     private EventDAO eventDAO;
 
@@ -85,10 +91,10 @@ public class EditEventController implements Initializable {
 
         // Validation
         if (nameField.getText().trim().isEmpty() ||
-            dateField.getText().trim().isEmpty() ||
-            locationField.getText().trim().isEmpty() ||
-            priceField.getText().trim().isEmpty() ||
-            seatsField.getText().trim().isEmpty()) {
+                dateField.getText().trim().isEmpty() ||
+                locationField.getText().trim().isEmpty() ||
+                priceField.getText().trim().isEmpty() ||
+                seatsField.getText().trim().isEmpty()) {
             errorLabel.setText("Please fill in all required fields");
             return;
         }
@@ -96,8 +102,8 @@ public class EditEventController implements Initializable {
         // Parse date
         LocalDateTime dateTime;
         try {
-            dateTime = LocalDateTime.parse(dateField.getText().trim(), 
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            dateTime = LocalDateTime.parse(dateField.getText().trim(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         } catch (DateTimeParseException e) {
             errorLabel.setText("Invalid date format. Use: yyyy-MM-dd HH:mm");
             return;
@@ -130,8 +136,8 @@ public class EditEventController implements Initializable {
         }
 
         // Check if user is the organizer of this event
-        if (!UserSession.getInstance().isLoggedIn() || 
-            UserSession.getInstance().getCurrentUser().getId() != selectedEvent.getOrganizerId()) {
+        if (!UserSession.getInstance().isLoggedIn() ||
+                UserSession.getInstance().getCurrentUser().getId() != selectedEvent.getOrganizerId()) {
             errorLabel.setText("You can only edit your own events");
             return;
         }
@@ -142,7 +148,7 @@ public class EditEventController implements Initializable {
         selectedEvent.setLocation(locationField.getText().trim());
         selectedEvent.setDescription(descriptionField.getText().trim());
         selectedEvent.setTicketPrice(price);
-        
+
         // Calculate new available seats (preserve the difference)
         int oldTotalSeats = selectedEvent.getTotalSeats();
         int oldAvailableSeats = selectedEvent.getAvailableSeats();
@@ -174,4 +180,3 @@ public class EditEventController implements Initializable {
         SceneManager.switchScene("/fxml/OrganizerEvents.fxml");
     }
 }
-

@@ -26,6 +26,18 @@ public class AdminDashboardController {
     private Label totalRevenueLabel;
 
     @FXML
+    private javafx.scene.control.Button viewUsersButton;
+
+    @FXML
+    private javafx.scene.control.Button viewAllEventsButton;
+
+    @FXML
+    private javafx.scene.control.Button viewStatisticsButton;
+
+    @FXML
+    private javafx.scene.control.Button logoutButton;
+
+    @FXML
     public void initialize() {
         if (UserSession.getInstance().isLoggedIn()) {
             welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
@@ -38,12 +50,13 @@ public class AdminDashboardController {
      */
     private void loadStatistics() {
         DashboardStats.AdminStats stats = DashboardStats.getAdminStats();
-        
+
         totalEventsLabel.setText(String.valueOf(stats.totalEvents));
         totalTicketsLabel.setText(String.valueOf(stats.totalTickets));
         totalRevenueLabel.setText("$" + String.format("%.2f", stats.totalRevenue));
-        
-        statsLabel.setText("System Overview - " + stats.totalEvents + " events, " + stats.totalTickets + " tickets sold");
+
+        statsLabel
+                .setText("System Overview - " + stats.totalEvents + " events, " + stats.totalTickets + " tickets sold");
     }
 
     /**
@@ -79,4 +92,3 @@ public class AdminDashboardController {
         SceneManager.switchScene("/fxml/Login.fxml");
     }
 }
-

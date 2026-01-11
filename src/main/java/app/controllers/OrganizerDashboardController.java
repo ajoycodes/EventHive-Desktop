@@ -26,6 +26,15 @@ public class OrganizerDashboardController {
     private Label revenueLabel;
 
     @FXML
+    private javafx.scene.control.Button createEventButton;
+
+    @FXML
+    private javafx.scene.control.Button myEventsButton;
+
+    @FXML
+    private javafx.scene.control.Button logoutButton;
+
+    @FXML
     public void initialize() {
         if (UserSession.getInstance().isLoggedIn()) {
             welcomeLabel.setText("Welcome, " + UserSession.getInstance().getCurrentUser().getUsername());
@@ -40,15 +49,16 @@ public class OrganizerDashboardController {
         if (UserSession.getInstance().isLoggedIn()) {
             int organizerId = UserSession.getInstance().getCurrentUser().getId();
             DashboardStats.OrganizerStats stats = DashboardStats.getOrganizerStats(organizerId);
-            
+
             eventsCountLabel.setText(String.valueOf(stats.totalEvents));
             ticketsSoldLabel.setText(String.valueOf(stats.totalTicketsSold));
             revenueLabel.setText("$" + String.format("%.2f", stats.totalRevenue));
-            
+
             if (stats.totalEvents == 0) {
                 statsLabel.setText("You haven't created any events yet. Create your first event to get started!");
             } else {
-                statsLabel.setText("You have " + stats.totalEvents + " event(s) with " + stats.totalTicketsSold + " ticket(s) sold");
+                statsLabel.setText("You have " + stats.totalEvents + " event(s) with " + stats.totalTicketsSold
+                        + " ticket(s) sold");
             }
         }
     }
@@ -78,4 +88,3 @@ public class OrganizerDashboardController {
         SceneManager.switchScene("/fxml/Login.fxml");
     }
 }
-

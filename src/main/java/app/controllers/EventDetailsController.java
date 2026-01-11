@@ -44,6 +44,9 @@ public class EventDetailsController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button backButton;
+
     private static Event selectedEvent;
 
     public static void setSelectedEvent(Event event) {
@@ -64,14 +67,15 @@ public class EventDetailsController implements Initializable {
      */
     private void displayEventDetails(Event event) {
         eventNameLabel.setText(event.getName());
-        dateTimeLabel.setText(event.getDateTime().format(DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy 'at' HH:mm")));
+        dateTimeLabel
+                .setText(event.getDateTime().format(DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy 'at' HH:mm")));
         locationLabel.setText(event.getLocation());
         priceLabel.setText("$" + String.format("%.2f", event.getTicketPrice()));
         seatsLabel.setText(String.valueOf(event.getAvailableSeats()));
         totalSeatsLabel.setText(String.valueOf(event.getTotalSeats()));
-        descriptionArea.setText(event.getDescription() != null && !event.getDescription().isEmpty() 
-            ? event.getDescription() 
-            : "No description available.");
+        descriptionArea.setText(event.getDescription() != null && !event.getDescription().isEmpty()
+                ? event.getDescription()
+                : "No description available.");
 
         // Disable book button if no seats available
         bookButton.setDisable(!event.hasAvailableSeats());
@@ -104,4 +108,3 @@ public class EventDetailsController implements Initializable {
         SceneManager.switchScene("/fxml/EventList.fxml");
     }
 }
-

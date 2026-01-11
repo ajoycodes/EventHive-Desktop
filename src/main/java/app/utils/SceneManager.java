@@ -36,9 +36,17 @@ public class SceneManager {
         try {
             java.net.URL resource = SceneManager.class.getResource(fxmlPath);
             if (resource == null) {
-                System.err.println("CRITICAL ERROR: FXML file not found: " + fxmlPath);
+                String errorMsg = "CRITICAL ERROR: FXML file not found: " + fxmlPath;
+                System.err.println(errorMsg);
                 System.err.println("Check if the file exists in 'src/main/resources/fxml/'");
-                // Don't crash, just return to avoid scene corruption
+
+                // Show Alert
+                javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                        javafx.scene.control.Alert.AlertType.ERROR);
+                alert.setTitle("Navigation Error");
+                alert.setHeaderText("Could not load screen");
+                alert.setContentText("File not found: " + fxmlPath);
+                alert.showAndWait();
                 return;
             }
 
@@ -52,6 +60,14 @@ public class SceneManager {
         } catch (IOException e) {
             System.err.println("Error loading FXML file: " + fxmlPath);
             e.printStackTrace();
+
+            // Show Alert
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                    javafx.scene.control.Alert.AlertType.ERROR);
+            alert.setTitle("Navigation Error");
+            alert.setHeaderText("Error loading screen: " + fxmlPath);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 

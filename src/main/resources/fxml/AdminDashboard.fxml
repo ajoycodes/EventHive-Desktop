@@ -77,7 +77,7 @@
                      </VBox>
                      <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" GridPane.columnIndex="2" prefWidth="180.0" prefHeight="150.0">
                         <children>
-                           <Label fx:id="totalRevenueLabel" styleClass="stat-number" text="$0.00" />
+                           <Label fx:id="totalRevenueLabel" styleClass="stat-number" text="0.00" />
                            <Label text="Total Revenue" styleClass="stat-label" />
                         </children>
                         <padding>

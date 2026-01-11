@@ -71,22 +71,23 @@ public class User {
     }
 
     public boolean isOrganizer() {
-        return role != null && (role.contains("ORGANIZER") || "ORGANIZER".equals(role));
+        return role != null && (role.toUpperCase().contains("ORGANIZER") || "ORGANIZER".equalsIgnoreCase(role));
     }
 
     public boolean isAdmin() {
-        return role != null && (role.contains("ADMIN") || "ADMIN".equals(role));
+        return role != null && (role.toUpperCase().contains("ADMIN") || "ADMIN".equalsIgnoreCase(role));
     }
 
     public boolean isUser() {
-        return role != null && (role.contains("USER") || "USER".equals(role));
+        return role != null && (role.toUpperCase().contains("USER") || "USER".equalsIgnoreCase(role));
     }
 
     /**
      * Check if user has a specific role
      */
     public boolean hasRole(String roleToCheck) {
-        if (role == null) return false;
+        if (role == null)
+            return false;
         String[] roles = role.split(",");
         for (String r : roles) {
             if (r.trim().equalsIgnoreCase(roleToCheck)) {
@@ -100,7 +101,8 @@ public class User {
      * Get all roles as array
      */
     public String[] getRoles() {
-        if (role == null || role.isEmpty()) return new String[0];
+        if (role == null || role.isEmpty())
+            return new String[0];
         return role.split(",");
     }
 
@@ -115,4 +117,3 @@ public class User {
         }
     }
 }
-

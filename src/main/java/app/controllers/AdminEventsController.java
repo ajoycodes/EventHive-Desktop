@@ -41,6 +41,9 @@ public class AdminEventsController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.control.Button backButton;
+
     private EventDAO eventDAO;
     private ObservableList<Event> events;
 
@@ -60,8 +63,7 @@ public class AdminEventsController implements Initializable {
             Event event = cellData.getValue();
             if (event.getDateTime() != null) {
                 return new javafx.beans.property.SimpleStringProperty(
-                    event.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-                );
+                        event.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             }
             return new javafx.beans.property.SimpleStringProperty("");
         });
@@ -86,4 +88,3 @@ public class AdminEventsController implements Initializable {
         SceneManager.switchScene("/fxml/AdminDashboard.fxml");
     }
 }
-

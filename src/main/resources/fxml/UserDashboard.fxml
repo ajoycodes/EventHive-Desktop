@@ -62,7 +62,7 @@
                      </VBox>
                      <VBox alignment="CENTER" spacing="10.0" styleClass="stat-card" prefWidth="200.0" prefHeight="150.0">
                         <children>
-                           <Label fx:id="totalSpentLabel" styleClass="stat-number" text="$0.00" />
+                           <Label fx:id="totalSpentLabel" styleClass="stat-number" text="0.00" />
                            <Label text="Total Spent" styleClass="stat-label" />
                         </children>
                         <padding>

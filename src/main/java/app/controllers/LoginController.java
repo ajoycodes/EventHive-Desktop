@@ -51,36 +51,51 @@ public class LoginController {
         }
 
         // Authenticate user
-        User user = userDAO.authenticate(usernameOrEmail, password);
+        try {
+            User user = userDAO.authenticate(usernameOrEmail, password);
 
-        if (user != null) {
-            System.out.println("[LoginController] Authentication successful for user: " + user.getUsername()
-                    + ", Roles: " + user.getRole());
-            // Set current user session
-            UserSession.getInstance().setCurrentUser(user);
+            if (user != null) {
+                System.out.println("[LoginController] Authentication successful for user: " + user.getUsername()
+                        + ", Roles: " + user.getRole());
+                // Set current user session
+                UserSession.getInstance().setCurrentUser(user);
 
-            // Check if user has multiple roles
-            String[] roles = user.getRoles();
-            if (roles.length > 1) {
-                System.out.println("[LoginController] User has multiple roles, showing dialog...");
-                // User has multiple roles, show selection dialog
-                String selectedRole = showRoleSelectionDialog(roles);
-                if (selectedRole != null) {
-                    System.out.println("[LoginController] Role selected: " + selectedRole);
-                    navigateToDashboard(selectedRole);
+                // Check if user has multiple roles
+                String[] roles = user.getRoles();
+                if (roles.length > 1) {
+                    System.out.println("[LoginController] User has multiple roles, showing dialog...");
+                    // User has multiple roles, show selection dialog
+                    String selectedRole = showRoleSelectionDialog(roles);
+                    if (selectedRole != null) {
+                        System.out.println("[LoginController] Role selected: " + selectedRole);
+                        navigateToDashboard(selectedRole);
+                    } else {
+                        System.out.println("[LoginController] Role selection cancelled");
+                    }
                 } else {
-                    System.out.println("[LoginController] Role selection cancelled");
+                    // Single role, navigate directly
+                    String role = roles.length > 0 ? roles[0] : "USER";
+                    System.out.println("[LoginController] Single role found: " + role);
+                    navigateToDashboard(role);
                 }
             } else {
-                // Single role, navigate directly
-                String role = roles.length > 0 ? roles[0] : "USER";
-                System.out.println("[LoginController] Single role found: " + role);
-                navigateToDashboard(role);
+                System.out.println("[LoginController] Authentication failed: Invalid credentials");
+                errorLabel.setText("Invalid username/email or password");
+                showAlert("Login Failed", "Invalid username or password.");
             }
-        } else {
-            System.out.println("[LoginController] Authentication failed: Invalid credentials");
-            errorLabel.setText("Invalid username/email or password");
+        } catch (Exception e) {
+            System.err.println("Login Error: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Login Error", "An error occurred: " + e.getMessage());
         }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     /**
@@ -115,6 +130,7 @@ public class LoginController {
      * Navigate to appropriate dashboard based on role
      */
     private void navigateToDashboard(String role) {
+        System.out.println("[LoginController] Navigating to dashboard for role: " + role);
         switch (role.toUpperCase()) {
             case "ADMIN":
                 SceneManager.switchScene("/fxml/AdminDashboard.fxml");
